@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Ling - Home{% endblock %}
+
+{% block content %}
+
+<article>
+  <section id="about" class="py-3 px-3 font-text">
+    <h1 class="font-title">Welcome to Ling!</h1>
+    <p class="px-3">
+      We are a language learning community focused on delivering high quality content with minimal know-your-customer (KYC) for free!
+    <p class="px-3">
+      Our goal is to make language learning accessible to everyone, regardless of their financial situation or location.
+    </p>
+  </section>
+  <section id="success-stories" class="text-white container py-4 bg-dark rounded">
+    <h2 class="font-text">Our Success Stories</h2>
+    <div id="carouselExampleIndicators" class="carousel slide text-center" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="px-5">
+            <p class="font-stories px-5 py-3">"I learned English with Ling and now I can talk to my friends from all over the world!"</p>
+            <p class="text-center font-text py-3">João da Silva</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="px-5">
+            <p class="font-stories px-5 py-3">"For years I have wanted to go to Germany, but the language just scared me! Ling made it easy!"</p>
+            <p class="text-center font-text py-3">John Snow</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="px-5">
+            <p class="font-stories px-5 py-3">"I finally passed the french certification exam and have been working in Paris, it was my biggest dream"</p>
+            <p class="text-center font-text py-3">Tiffany Smith</p>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </section>
+</article>
+
+{% endblock %}

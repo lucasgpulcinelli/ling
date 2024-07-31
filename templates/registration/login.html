@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Ling - Login{% endblock %}
+
+{% block content %}
+
+<h1 class="font-text">Login</h1>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form }}
+  <button type="submit" class="font-text btn-primary rounded">Log In</button>
+</form>
+
+{% endblock %}

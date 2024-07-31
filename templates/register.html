@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Ling - Register{% endblock %}
+
+{% block content %}
+
+<h1 class="font-text">Sign up</h1>
+<div class="font-text">
+<form method="post">
+  {% csrf_token %}
+  {{ form }}
+  <button type="submit" class="font-text btn-primary rounded">Sign Up</button>
+</form>
+</div>
+
+{% endblock %}

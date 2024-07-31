@@ -1,0 +1,54 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#content {
+    flex: 1;
+    margin-bottom: 250px;
+}
+
+.main-title {
+  font-family: "Bad Script";
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.font-title {
+  font-family: "Bad Script";
+  font-weight: bold;
+}
+
+.font-text {
+  font-family: Manjari;
+  text-align: justify;
+  font-size: 1em;
+}
+
+.font-stories {
+  font-family: Manjari;
+  font-size: 2em;
+}
+
+.font-icon {
+  font-size: 2em;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.lesson-image {
+  height: 100px;
+}
+
+.option-image {
+  height: 200px;
+}
+

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Ling - Courses{% endblock %}
+
+{% block content %}
+
+<h1 class="p-3 font-title">Courses</h1>
+<ul>
+{% for course in courses %}
+<li class="p-2">
+  <a class="px-3 text-white rounded bg-dark d-flex justify-content-between align-items-center" href="./{{course.id}}">
+    <div>
+      <span class="font-stories">{{course.name}}</span>
+      {% if course.subscribed %}
+      <div class="rounded text-dark" style="background: lightgreen;">
+        <span class="font-text p-2">Percent completed: {{course.pct_completed}}%</span>
+      </div>
+      {% else %}
+      <div class="rounded text-dark" style="background: yellow;">
+        <span class="font-text p-2">Not subscribed</span>
+      </div>
+      {% endif %}
+    </div>
+    <img class="p-3" src={{course.image.url}}>
+  </a>
+</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

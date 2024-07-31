@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Ling - {{class_execution.lesson.name}}{% endblock %}
+
+{% block content %}
+
+<h1 class="p-3 font-title">"{{class_execution.lesson.name}}"</h1>
+
+<div class="p-4 justify-content-center">
+<h3 class="font-stories" id="question"> </h3>
+</div>
+
+<hr class="hr">
+<div onclick="selectOption(1)" class="rounded" id="div_1">
+  <img class="option-image rounded p-4" id="image_1">
+  <span class="font-text" id="option_1"></span>
+</div>
+<hr class="hr">
+<div onclick="selectOption(2)" class="rounded" id="div_2">
+  <img class="option-image rounded p-4" id="image_2">
+  <span class="font-text" id="option_2"></span>
+</div>
+<hr class="hr">
+<div onclick="selectOption(3)" class="rounded" id="div_3">
+  <img class="option-image rounded p-4" id="image_3">
+  <span class="font-text" id="option_3"></span>
+</div>
+<hr class="hr">
+<div onclick="selectOption(4)" class="rounded" id="div_4">
+  <img class="option-image rounded p-4" id="image_4">
+  <span class="font-text" id="option_4"></span>
+</div>
+
+<div class="p-4 justify-content-center">
+<button class="btn-primary" onclick="answerQuestion()">Confirm</button>
+</div>
+
+<script>
+  const question_element = document.getElementById("question");
+  const options_element = document.getElementById("options");
+  const image_element = [
+    document.getElementById("image_1"),
+    document.getElementById("image_2"),
+    document.getElementById("image_3"),
+    document.getElementById("image_4")
+  ];
+  const text_element = [
+    document.getElementById("option_1"),
+    document.getElementById("option_2"),
+    document.getElementById("option_3"),
+    document.getElementById("option_4")
+  ]
+
+  let current_selected = -1;
+  let current_question_index = 0;
+
+  const questions = fetch("/class/{{class_execution.id}}/question")
+    .then(response => response.json())
+    .then(async questions => {
+      await nextQuestion(questions);
+      await renderQuestion(questions[current_question_index]);
+
+      return questions;
+    });
+
+  function selectOption(num) {
+    if(current_selected == num) {
+      let d = document.getElementById("div_" + num);
+      d.style.backgroundColor = 'white';
+      current_selected = -1;
+      return;
+    }
+
+    if(current_selected != -1) {
+      let d = document.getElementById("div_" + current_selected);
+      d.style.backgroundColor = 'white';
+    }
+
+    let d = document.getElementById("div_" + num);
+    d.style.backgroundColor = 'lightgreen';
+
+    current_selected = num;
+  }
+
+  function renderQuestion(question) {
+    question_element.innerHTML = question.text;
+    image_element[0].src = question.images[0];
+    image_element[1].src = question.images[1];
+    image_element[2].src = question.images[2];
+    image_element[3].src = question.images[3];
+    text_element[0].innerHTML = question.options[0];
+    text_element[1].innerHTML = question.options[1];
+    text_element[2].innerHTML = question.options[2];
+    text_element[3].innerHTML = question.options[3];
+  }
+
+  async function answerQuestion() {
+    if(current_selected == -1) {
+      return;
+    }
+
+    const q = await questions;
+    const question = q[current_question_index];
+    const resp = await fetch(
+      `/class/{{class_execution.id}}/question/${question.id}/answer`,
+      {
+        method: "POST",
+        body: JSON.stringify({ option: current_selected }),
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": "{{csrf_token}}"
+        }
+      }
+    );
+
+    const respjs = await resp.json();
+    if (respjs.correct) {
+      alert("Correct!");
+    } else {
+      alert("Incorrect!");
+    }
+
+    current_question_index++;
+    await nextQuestion(q);
+
+    renderQuestion(q[current_question_index]);
+  }
+
+  async function nextQuestion(q) {
+    while (!q[current_question_index] || q[current_question_index].correct !== null){
+      current_question_index++;
+      if(q.length <= current_question_index){
+        await fetch("/class/{{class_execution.id}}/conclude", {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": "{{csrf_token}}"
+          }
+        });
+        window.location.replace("/course/{{class_execution.subscription.course.id}}");
+        await new Promise(resolve => setTimeout(resolve, 10e3));
+      }
+    }
+  }
+
+</script>
+
+{% endblock %}
